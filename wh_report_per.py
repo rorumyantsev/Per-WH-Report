@@ -11,8 +11,8 @@ import dateutil.parser
 st.set_page_config(layout="wide")
 
 CLAIM_SECRETS = st.secrets["CLAIM_SECRETS"]
-SHEET_KEY = st.secrets["SHEET_KEY"]
-SHEET_ID = st.secrets["SHEET_ID"]
+#SHEET_KEY = st.secrets["SHEET_KEY"]
+#SHEET_ID = st.secrets["SHEET_ID"]
 API_URL = st.secrets["API_URL"]
 FILE_BUFFER = io.BytesIO()
 
