@@ -144,7 +144,7 @@ def get_report(option="Today", start_=None, end_=None) -> pandas.DataFrame:
                 report_courier_name = "No courier yet"
                 report_courier_park = "No courier yet"
             try:
-                report_return_reason = str(claim['route_points'][1]['return_reasons'])
+                report_return_reason = claim['route_points'][1]['return_reasons'][0]
                 report_return_comment = claim['route_points'][1]['return_comment']
             except:
                 report_return_reason = "No return reasons"
