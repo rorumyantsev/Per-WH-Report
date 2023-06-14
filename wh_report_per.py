@@ -68,8 +68,8 @@ def get_report(option="Today", start_=None, end_=None) -> pandas.DataFrame:
         date_from = date_from_offset.strftime("%Y-%m-%d")
         date_to = end_
     elif option == "Weekly":
-        start_ = "2023-06-05"
-        end_ = "2023-06-11"
+        start_ = "2023-06-12"
+        end_ = "2023-06-18"
         today = datetime.datetime.now(timezone(client_timezone))
         date_from_offset = datetime.datetime.fromisoformat(start_).astimezone(
             timezone(client_timezone)) - datetime.timedelta(days=1)
