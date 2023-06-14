@@ -183,7 +183,7 @@ def get_report(option="Today", start_=None, end_=None) -> pandas.DataFrame:
     return result_frame
 
 
-st.markdown(f"# Chile warehouse routes report")
+st.markdown(f"# Peru warehouse routes report")
 
 if st.sidebar.button("Refresh data 🔮", type="primary"):
     st.cache_data.clear()
