@@ -191,7 +191,7 @@ st.sidebar.caption(f"Page reload doesn't refresh the data.\nInstead, use this bu
 
 option = st.sidebar.selectbox(
     "Select report date:",
-    ["Weekly", "Received", "Today", "Yesterday", "Tomorrow"]  # Disabled Monthly for now
+    ["Weekly", "Monthly", "Received", "Today", "Yesterday", "Tomorrow"]  # Disabled Monthly for now
 )
 
 
