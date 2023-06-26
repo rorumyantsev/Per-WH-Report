@@ -169,7 +169,7 @@ def get_report(option="Today", start_=None, end_=None) -> pandas.DataFrame:
                    report_return_reason, report_route_id,
                    report_longitude, report_latitude, report_store_longitude, report_store_latitude, report_corp_id, report_point_B_time]
             report.append(row)
-            i = i + 1
+        i = i + 1
     
     print(f"{datetime.datetime.now()}: Building dataframe")
     result_frame = pandas.DataFrame(report,
