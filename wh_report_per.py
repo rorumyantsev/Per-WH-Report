@@ -11,6 +11,7 @@ import dateutil.parser
 st.set_page_config(layout="wide")
 
 CLAIM_SECRETS = st.secrets["CLAIM_SECRETS"]
+CLIENT_LIST = st.secrets["CLIENTS"]
 #SHEET_KEY = st.secrets["SHEET_KEY"]
 #SHEET_ID = st.secrets["SHEET_ID"]
 API_URL = st.secrets["API_URL"]
@@ -90,6 +91,7 @@ def get_report(option="Today", start_=None, end_=None) -> pandas.DataFrame:
 
     today = today.strftime("%Y-%m-%d")
     report = []
+    i = 0
     for secret in CLAIM_SECRETS:
         claims, cursor = get_claims(secret, date_from, date_to)
         while cursor:
@@ -120,6 +122,7 @@ def get_report(option="Today", start_=None, end_=None) -> pandas.DataFrame:
                 report_lo_code = claim['items'][0]['extra_id']
             except:
                 report_lo_code = "No LO code"
+            report_client = CLIENT_LIST[i]
             report_pickup_address = claim['route_points'][0]['address']['fullname']
             report_pod_point_id = str(claim['route_points'][1]['id'])
             report_receiver_address = claim['route_points'][1]['address']['fullname']
@@ -159,16 +162,17 @@ def get_report(option="Today", start_=None, end_=None) -> pandas.DataFrame:
                 report_point_B_time = report_point_B_time.strftime("%Y-%m-%dT%H:%M:%S.%f%z")
             except:
                 report_point_B_time = "Point B was never visited"
-            row = [report_cutoff, report_created_time, report_client_id, report_barcode, report_claim_id, report_lo_code, report_status, report_status_time, 
+            row = [report_cutoff, report_created_time, report_client, report_client_id, report_barcode, report_claim_id, report_lo_code, report_status, report_status_time, 
                    report_pod_point_id, report_pickup_address, report_receiver_address, report_receiver_phone, report_receiver_name, report_comment,
                    report_courier_name, report_courier_park,
                    report_return_reason, report_route_id,
                    report_longitude, report_latitude, report_store_longitude, report_store_latitude, report_corp_id, report_point_B_time]
             report.append(row)
+            i = i + 1
     
     print(f"{datetime.datetime.now()}: Building dataframe")
     result_frame = pandas.DataFrame(report,
-                                    columns=["cutoff", "created_time", "client_id", "barcode", "claim_id", "lo_code", "status", "status_time",
+                                    columns=["cutoff", "created_time", "client", "client_id", "barcode", "claim_id", "lo_code", "status", "status_time",
                                              "pod_point_id", "pickup_address", "receiver_address", "receiver_phone",
                                              "receiver_name", "client_comment", "courier_name", "courier_park",
                                              "return_reason", "route_id", "lon", "lat", "store_lon", "store_lat",
