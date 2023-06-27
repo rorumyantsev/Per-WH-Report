@@ -70,11 +70,9 @@ def get_report(option="Today", start_=None, end_=None) -> pandas.DataFrame:
         date_to = end_
     elif option == "Weekly":
         start_date = datetime.datetime.now(timezone(client_timezone))-datetime.timedelta(days=datetime.datetime.weekday(datetime.datetime.now(timezone(client_timezone))))
-        end_date=start_date + datetime.timedelta(days=7)
+        end_date=start_date + datetime.timedelta(days=6)
         start_ = start_date.strftime("%Y-%m-%d")
         end_ = end_date.strftime("%Y-%m-%d")
-        st.write(start_)
-        st.write(end_)
         #start_ = "2023-06-26"
         #end_ = "2023-07-02"
         today = datetime.datetime.now(timezone(client_timezone))
