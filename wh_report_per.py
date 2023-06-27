@@ -21,7 +21,7 @@ FILE_BUFFER = io.BytesIO()
 
 def get_claims(secret, date_from, date_to, cursor=0):
     url = API_URL
-    timezone_offset = "-04:00"
+    timezone_offset = "-05:00"
     payload = json.dumps({
         "created_from": f"{date_from}T00:00:00{timezone_offset}",
         "created_to": f"{date_to}T23:59:59{timezone_offset}",
@@ -59,7 +59,7 @@ def get_report(option="Today", start_=None, end_=None) -> pandas.DataFrame:
     elif option == "Received":
         offset_back = 0
     
-    client_timezone = "America/Santiago"
+    client_timezone = "America/Lima"
 
     if option == "Monthly":
         start_ = "2023-05-01"
@@ -70,8 +70,10 @@ def get_report(option="Today", start_=None, end_=None) -> pandas.DataFrame:
         date_from = date_from_offset.strftime("%Y-%m-%d")
         date_to = end_
     elif option == "Weekly":
-        start_ = "2023-06-26"
-        end_ = "2023-07-02"
+        start_ = datetime.datetime.now(timezone(client_timezone))-datetime.timedelta(days=datetime.datetime.weekday(datetime.datetime.now))
+        end_=start+datetime.timedelta(days=7)
+        #start_ = "2023-06-26"
+        #end_ = "2023-07-02"
         today = datetime.datetime.now(timezone(client_timezone))
         date_from_offset = datetime.datetime.fromisoformat(start_).astimezone(
             timezone(client_timezone)) - datetime.timedelta(days=1)
