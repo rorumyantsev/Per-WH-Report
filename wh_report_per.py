@@ -12,7 +12,6 @@ st.set_page_config(layout="wide")
 
 CLAIM_SECRETS = st.secrets["CLAIM_SECRETS"]
 CLIENT_LIST = st.secrets["CLIENTS"]
-st.write(CLIENT_LIST[2])
 #SHEET_KEY = st.secrets["SHEET_KEY"]
 #SHEET_ID = st.secrets["SHEET_ID"]
 API_URL = st.secrets["API_URL"]
@@ -70,7 +69,7 @@ def get_report(option="Today", start_=None, end_=None) -> pandas.DataFrame:
         date_from = date_from_offset.strftime("%Y-%m-%d")
         date_to = end_
     elif option == "Weekly":
-        start_ = datetime.datetime.now(timezone(client_timezone))-datetime.timedelta(days=datetime.datetime.weekday(datetime.datetime.now))
+        start_ = datetime.datetime.now(timezone(client_timezone))-datetime.timedelta(days=datetime.datetime.weekday(datetime.datetime.now(timezone(client_timezone)))
         end_=start+datetime.timedelta(days=7)
         #start_ = "2023-06-26"
         #end_ = "2023-07-02"
