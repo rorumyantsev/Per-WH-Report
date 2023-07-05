@@ -167,7 +167,7 @@ def get_report(option="Today", start_=None, end_=None) -> pandas.DataFrame:
             except:
                 report_point_B_time = "Point B was never visited"
             row = [report_cutoff, report_created_time, report_client, report_client_id, report_barcode, report_claim_id, report_lo_code, report_status, report_status_time, 
-                   report_pod_point_id, report_pickup_address, report_receiver_address, report_comment,
+                   report_pod_point_id, report_pickup_address, report_receiver_address, report_receiver_phone, report_receiver_name, report_comment,
                    report_courier_name, report_courier_park,
                    report_return_reason, report_route_id,
                    report_longitude, report_latitude, report_store_longitude, report_store_latitude, report_corp_id, report_point_B_time]
@@ -177,7 +177,7 @@ def get_report(option="Today", start_=None, end_=None) -> pandas.DataFrame:
     print(f"{datetime.datetime.now()}: Building dataframe")
     result_frame = pandas.DataFrame(report,
                                     columns=["cutoff", "created_time", "client", "client_id", "barcode", "claim_id", "lo_code", "status", "status_time",
-                                             "pod_point_id", "pickup_address", "receiver_address", "client_comment", 
+                                             "pod_point_id", "pickup_address", "receiver_address", "receiver_phone", "receiver_name", "client_comment", 
                                              "courier_name", "courier_park",
                                              "return_reason", "route_id", "lon", "lat", "store_lon", "store_lat",
                                              "corp_client_id", "point_B_time"])
