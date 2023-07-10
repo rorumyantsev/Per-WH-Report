@@ -527,4 +527,5 @@ top_stats = snapshot.statistics('lineno')
 print("[ Top 20 ]")
 for stat in top_stats[:20]:
     print(stat)
-print(f"{datetime.datetime.now()}: Finished")
+current, peak = tracemalloc.get_traced_memory()
+print(f"{datetime.datetime.now()}: Finished, \nCurrent memmory usage: {current},\nPeak memmory usage: {peak}")
