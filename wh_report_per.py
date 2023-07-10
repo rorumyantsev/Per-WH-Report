@@ -527,5 +527,5 @@ top_stats = snapshot.statistics('lineno')
 print("[ Top 20 ]")
 for stat in top_stats[:20]:
     print(stat)
-
+print(f"topstats len {len(top_stats)} \n {datetime.datetime.now()}")
 print(f"{datetime.datetime.now()}: Finished")
