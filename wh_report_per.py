@@ -516,12 +516,12 @@ with pandas.ExcelWriter(FILE_BUFFER, engine='xlsxwriter') as writer:
     filtered_frame.to_excel(writer, sheet_name='wh_routes_report')
     #writer.close()
 
-    st.download_button(
-        label="Download report as xlsx",
-        data=FILE_BUFFER,
-        file_name=f"route_report_{TODAY}.xlsx",
-        mime="application/vnd.ms-excel"
-    )
+st.download_button(
+    label="Download report as xlsx",
+    data=FILE_BUFFER,
+    file_name=f"route_report_{TODAY}.xlsx",
+    mime="application/vnd.ms-excel"
+)
 snapshot = tracemalloc.take_snapshot()
 top_stats = snapshot.statistics('lineno')
 print("[ Top 20 ]")
