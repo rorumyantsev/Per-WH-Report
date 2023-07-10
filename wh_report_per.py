@@ -528,4 +528,6 @@ print("[ Top 20 ]")
 for stat in top_stats[:20]:
     print(stat)
 current, peak = tracemalloc.get_traced_memory()
-print(f"{datetime.datetime.now()}: Finished, \nCurrent memmory usage: {current},\nPeak memmory usage: {peak}")
+print(f"{datetime.datetime.now()}: Finished")
+print(f"Current memmory usage: {current})
+print(f"Peak memmory usage: {peak}")
