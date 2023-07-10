@@ -509,7 +509,7 @@ with st.expander(":round_pushpin: Orders on a map:"):
 
 
 print(f"{datetime.datetime.now()}: Rendering download button")
-current, peak = tracemalloc.get_traced_memory()
+
 with pandas.ExcelWriter(FILE_BUFFER, engine='xlsxwriter') as writer:
     filtered_frame["status_time"] = filtered_frame["status_time"].apply(lambda a: pandas.to_datetime(a).date()).reindex()
     filtered_frame["created_time"] = filtered_frame["created_time"].apply(lambda a: pandas.to_datetime(a).date()).reindex()
@@ -529,5 +529,6 @@ print("[ Top 20 ]")
 for stat in top_stats[:20]:
     print(stat)
 print(f"{datetime.datetime.now()}: Finished")
+current, peak = tracemalloc.get_traced_memory()
 print(f"Current memmory usage: {current}")
 print(f"Peak memmory usage: {peak}")
