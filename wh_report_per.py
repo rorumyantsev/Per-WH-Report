@@ -509,11 +509,12 @@ with st.expander(":round_pushpin: Orders on a map:"):
 
 
 print(f"{datetime.datetime.now()}: Rendering download button")
+filtered_frame["status_time"] = filtered_frame["status_time"].apply(lambda a: pandas.to_datetime(a).date()).reindex()
+filtered_frame["created_time"] = filtered_frame["created_time"].apply(lambda a: pandas.to_datetime(a).date()).reindex()
 with pandas.ExcelWriter(FILE_BUFFER, engine='xlsxwriter') as writer:
-    filtered_frame["status_time"] = filtered_frame["status_time"].apply(lambda a: pandas.to_datetime(a).date()).reindex()
-    filtered_frame["created_time"] = filtered_frame["created_time"].apply(lambda a: pandas.to_datetime(a).date()).reindex()
+
     filtered_frame.to_excel(writer, sheet_name='wh_routes_report')
-    writer.close()
+    #writer.close()
 
     st.download_button(
         label="Download report as xlsx",
@@ -524,7 +525,7 @@ with pandas.ExcelWriter(FILE_BUFFER, engine='xlsxwriter') as writer:
 snapshot = tracemalloc.take_snapshot()
 top_stats = snapshot.statistics('lineno')
 print("[ Top 20 ]")
-for stat in top_stats[:10]:
+for stat in top_stats[:20]:
     print(stat)
 
 print(f"{datetime.datetime.now()}: Finished")
