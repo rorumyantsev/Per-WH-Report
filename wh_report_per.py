@@ -7,6 +7,9 @@ import io
 import streamlit as st
 import pydeck as pdk
 import dateutil.parser
+import tracemalloc
+
+tracemalloc.start()
 
 st.set_page_config(layout="wide")
 
@@ -518,5 +521,10 @@ with pandas.ExcelWriter(FILE_BUFFER, engine='xlsxwriter') as writer:
         file_name=f"route_report_{TODAY}.xlsx",
         mime="application/vnd.ms-excel"
     )
+snapshot = tracemalloc.take_snapshot()
+top_stats = snapshot.statistics('lineno')
+print("[ Top 20 ]")
+for stat in top_stats[:10]:
+    print(stat)
 
 print(f"{datetime.datetime.now()}: Finished")
