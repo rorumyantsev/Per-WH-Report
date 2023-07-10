@@ -509,10 +509,10 @@ with st.expander(":round_pushpin: Orders on a map:"):
 
 
 print(f"{datetime.datetime.now()}: Rendering download button")
-filtered_frame["status_time"] = filtered_frame["status_time"].apply(lambda a: pandas.to_datetime(a).date()).reindex()
-filtered_frame["created_time"] = filtered_frame["created_time"].apply(lambda a: pandas.to_datetime(a).date()).reindex()
-with pandas.ExcelWriter(FILE_BUFFER, engine='xlsxwriter') as writer:
 
+with pandas.ExcelWriter(FILE_BUFFER, engine='xlsxwriter') as writer:
+    filtered_frame["status_time"] = filtered_frame["status_time"].apply(lambda a: pandas.to_datetime(a).date()).reindex()
+    filtered_frame["created_time"] = filtered_frame["created_time"].apply(lambda a: pandas.to_datetime(a).date()).reindex()
     filtered_frame.to_excel(writer, sheet_name='wh_routes_report')
     #writer.close()
 
