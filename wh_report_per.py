@@ -509,7 +509,7 @@ with st.expander(":round_pushpin: Orders on a map:"):
 
 
 print(f"{datetime.datetime.now()}: Rendering download button")
-@st.cache_data(ttl=1800.0)
+@st.cache_data(ttl=1800.0, experimental_allow_widgets=True)
 def get_file(option):
     with pandas.ExcelWriter(FILE_BUFFER, engine='xlsxwriter') as writer:
         filtered_frame["status_time"] = filtered_frame["status_time"].apply(lambda a: pandas.to_datetime(a).date()).reindex()
