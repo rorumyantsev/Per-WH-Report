@@ -509,20 +509,23 @@ with st.expander(":round_pushpin: Orders on a map:"):
 
 
 print(f"{datetime.datetime.now()}: Rendering download button")
-
-with pandas.ExcelWriter(FILE_BUFFER, engine='xlsxwriter') as writer:
-    filtered_frame["status_time"] = filtered_frame["status_time"].apply(lambda a: pandas.to_datetime(a).date()).reindex()
-    filtered_frame["created_time"] = filtered_frame["created_time"].apply(lambda a: pandas.to_datetime(a).date()).reindex()
-    filtered_frame.to_excel(writer, sheet_name='wh_routes_report')
-    #writer.close()
-
-st.download_button(
-    label="Download report as xlsx",
-    data=FILE_BUFFER,
-    file_name=f"route_report_{TODAY}.xlsx",
-    mime="application/vnd.ms-excel"
-)
+@st.cache_data(ttl=1800.0)
+def get_file(option):
+    with pandas.ExcelWriter(FILE_BUFFER, engine='xlsxwriter') as writer:
+        filtered_frame["status_time"] = filtered_frame["status_time"].apply(lambda a: pandas.to_datetime(a).date()).reindex()
+        filtered_frame["created_time"] = filtered_frame["created_time"].apply(lambda a: pandas.to_datetime(a).date()).reindex()
+        filtered_frame.to_excel(writer, sheet_name='wh_routes_report')
+        #writer.close()
     
+    st.download_button(
+        label="Download report as xlsx",
+        data=FILE_BUFFER,
+        file_name=f"route_report_{TODAY}.xlsx",
+        mime="application/vnd.ms-excel"
+    )
+
+get_file(option)
+
 snapshot = tracemalloc.take_snapshot()
 top_stats = snapshot.statistics('lineno')
 print("[ Top 20 ]")
