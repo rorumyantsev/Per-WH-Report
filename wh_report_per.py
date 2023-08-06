@@ -155,10 +155,8 @@ def get_report(option="Today", start_=None, end_=None) -> pandas.DataFrame:
                 report_courier_park = "No courier yet"
             try:
                 report_return_reason = str(claim['route_points'][1]['return_reasons'])
-#                report_return_comment = claim['route_points'][1]['return_comment']
             except:
                 report_return_reason = "No return reasons"
-#               report_return_comment = "No return comments"
             try:
                 report_route_id = claim['route_id']
             except:
@@ -169,11 +167,16 @@ def get_report(option="Today", start_=None, end_=None) -> pandas.DataFrame:
                 report_point_B_time = report_point_B_time.strftime("%Y-%m-%dT%H:%M:%S.%f%z")
             except:
                 report_point_B_time = "Point B was never visited"
+            try:
+                report_point_A_time = datetime.datetime.strptime(claim['route_points'][0]['visited_at']['actual'],"%Y-%m-%dT%H:%M:%S.%f%z").astimezone(
+        timezone(client_timezone))
+                report_point_A_time = report_point_A_time.strftime("%Y-%m-%dT%H:%M:%S.%f%z")
+            except:
+                report_point_A_time = "Point A missing pick datetime"
             row = [report_cutoff, report_created_time, report_client, report_client_id, report_barcode, report_claim_id, report_lo_code, report_status, report_status_time, 
                    report_pod_point_id, report_pickup_address, report_receiver_address, report_receiver_phone, report_receiver_name, report_comment,
-                   report_courier_name, report_courier_park,
-                   report_return_reason, report_route_id,
-                   report_longitude, report_latitude, report_store_longitude, report_store_latitude, report_corp_id, report_point_B_time]
+                   report_courier_name, report_courier_park, report_return_reason, report_route_id, report_longitude, report_latitude, 
+                   report_store_longitude, report_store_latitude, report_corp_id, report_point_B_time, report_point_A_time]
             report.append(row)
         i = i + 1
     
@@ -183,7 +186,7 @@ def get_report(option="Today", start_=None, end_=None) -> pandas.DataFrame:
                                              "pod_point_id", "pickup_address", "receiver_address", "receiver_phone", "receiver_name", "client_comment", 
                                              "courier_name", "courier_park",
                                              "return_reason", "route_id", "lon", "lat", "store_lon", "store_lat",
-                                             "corp_client_id", "point_B_time"])
+                                             "corp_client_id", "point_B_time", "courier_pick_time"])
 #     orders_with_pod = get_pod_orders()
 #     result_frame = result_frame.apply(lambda row: check_for_pod(row, orders_with_pod), axis=1)
 #    try:
